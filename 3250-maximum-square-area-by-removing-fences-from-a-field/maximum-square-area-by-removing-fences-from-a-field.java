@@ -1,50 +1,41 @@
 class Solution {
-    static final int MOD = 1_000_000_007;
 
     public int maximizeSquareArea(int m, int n, int[] hFences, int[] vFences) {
-        //Adding boundary fences
-        List<Integer> h = new ArrayList<>();
-        List<Integer> v = new ArrayList<>();
+        Set<Integer> hEdges = getEdges(hFences, m);
+        Set<Integer> vEdges = getEdges(vFences, n);
 
-        h.add(1);
-        h.add(m);
-        v.add(1);
-        v.add(n);
-
-        for (int x : hFences) h.add(x);
-        for (int x : vFences) v.add(x);
-
-        Collections.sort(h);
-        Collections.sort(v);
-
-        // getting all possible distances
-        Set<Integer> horizontalDistances = new HashSet<>();
-        Set<Integer> verticalDistances = new HashSet<>();
-
-        for (int i = 0; i < h.size(); i++) {
-            for (int j = i + 1; j < h.size(); j++) {
-                horizontalDistances.add(h.get(j) - h.get(i));
+        long res = 0;
+        for (int e : hEdges) {
+            if (vEdges.contains(e)) {
+                res = Math.max(res, e);
             }
         }
 
-        for (int i = 0; i < v.size(); i++) {
-            for (int j = i + 1; j < v.size(); j++) {
-                verticalDistances.add(v.get(j) - v.get(i));
-            }
+        if (res == 0) {
+            return -1;
+        } else {
+            return (int) ((res * res) % 1000000007);
         }
-
-        //Find maximum common distance
-        int maxSide = -1;
-        for (int d : horizontalDistances) {
-            if (verticalDistances.contains(d)) {
-                maxSide = Math.max(maxSide, d);
-            }
-        }
-
-        if (maxSide == -1) return -1;
-
-        long area = (long) maxSide * maxSide;
-        return (int) (area % MOD);
     }
 
+    private Set<Integer> getEdges(int[] fences, int border) {
+        Set<Integer> set = new HashSet<>();
+        List<Integer> list = new ArrayList<>();
+
+        for (int fence : fences) {
+            list.add(fence);
+        }
+
+        list.add(1);
+        list.add(border);
+        Collections.sort(list);
+
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = i + 1; j < list.size(); j++) {
+                set.add(list.get(j) - list.get(i));
+            }
+        }
+
+        return set;
+    }
 }
