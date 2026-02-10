@@ -9,7 +9,7 @@ class Solution {
             }else{
                 h2.add(nums[i]);
             }
-            for (int j=i;j<nums.length;j++){
+            for (int j=i+1;j<nums.length;j++){
                 if (nums[j]%2==0){
                     h1.add(nums[j]);
                 }else{
