@@ -2,8 +2,8 @@ class Solution {
     public int longestBalanced(int[] nums) {
         int res=0;
         for (int i=0;i<nums.length-1;i++){
-            Set<Integer> h1= new HashSet<>();
-            Set<Integer> h2 = new HashSet<>();
+            HashSet<Integer> h1= new HashSet<>();
+            HashSet<Integer> h2 = new HashSet<>();
             if (nums[i]%2==0){
                 h1.add(nums[i]);
             }else{
